@@ -19,7 +19,7 @@ Parameters:
     Description: Select security group in your selected VPC.
   AppTargetGroupName:
     Type: String
-    Default: 'arn:aws:elasticloadbalancing:us-east-1:363848978969:targetgroup/MyApi-target/e48b7a5a17a88f7f'
+    Default: MyApi-target
     Description: Target Group Name
   Environment:
     Type: String
@@ -59,16 +59,15 @@ Parameters:
     Description: For Container Health Check
   HttpForwardRuleForNginx:
     Type: String
-    Default: sample
+    Default: MyApi
   ALBListenerHttps:
     Type: String
     Default: >-
-     arn:aws:elasticloadbalancing:us-east-1:363848978969:listener/app/MyApiLb/2dbf7d77c7fc4c41/61884f1f3af342d6
+     MyApiLb-1065434889.us-east-1.elb.amazonaws.com 
     Description: 'Https/Http ListenerArn, where we want to add the TargetGroup'
   ECRRepositoryName:
     Type: String
-    Default: >-
-    arn:aws:elasticloadbalancing:us-east-1:363848978969:targetgroup/MyApi-target/e48b7a5a17a88f7f
+    Default: MyApi-repo
     Description: ECR repo name
   EcrRepoArn:
     Type: String
