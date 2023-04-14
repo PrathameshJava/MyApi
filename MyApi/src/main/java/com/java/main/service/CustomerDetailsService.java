@@ -3,6 +3,7 @@ package com.java.main.service;
 import java.util.List;
 
 import com.java.main.entity.CustomersDetail;
+import com.java.main.exception.ResourceNotFoundException;
 
 public interface CustomerDetailsService {
 
@@ -18,8 +19,8 @@ public interface CustomerDetailsService {
 
 	public CustomersDetail regCustomer(CustomersDetail customersDetail);
 
-	public CustomersDetail upateCustomer(String carname, Integer id);
+	public CustomersDetail upateCustomer(String carname, Integer id) throws ResourceNotFoundException;
 
-	public CustomersDetail getCustomerById(int id);
+	public CustomersDetail getCustomerById(int id) throws ResourceNotFoundException;
 
 }

@@ -7,10 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.java.main.entity.CustomersDetail;
 
-
-
 @Repository
-public interface CustomersDetailRepository extends JpaRepository<CustomersDetail,Integer > {
+public interface CustomersDetailRepository extends JpaRepository<CustomersDetail, Integer> {
 
 	public List<CustomersDetail> findByCustomername(String customername);
 

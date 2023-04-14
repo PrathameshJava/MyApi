@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.java.main.Dao.CarsRepository;
 import com.java.main.entity.Cars;
+import com.java.main.exception.ResourceNotFoundException;
 import com.java.main.service.CarsService;
 
 @Service
@@ -39,7 +40,7 @@ public class CarsServiceImpl implements CarsService {
 	}
 
 	@Override
-	public Cars upateCars(String carname, Integer id) {
+	public Cars upateCars(String carname, Integer id) throws ResourceNotFoundException{
 		Cars cars2 = getCarById(id);
 		cars2.setCarname(carname);
 		return carsRepository.save(cars2);
@@ -52,7 +53,7 @@ public class CarsServiceImpl implements CarsService {
 	}
 
 	@Override
-	public Cars getCarById(int id) {
+	public Cars getCarById(int id) throws ResourceNotFoundException{
 
 		return carsRepository.findById(id).orElse(new Cars());
 	}

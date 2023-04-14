@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.java.main.Dao.CarsDetailsRepo;
 import com.java.main.entity.CarsDetails;
+import com.java.main.exception.ResourceNotFoundException;
 import com.java.main.service.CarsdetailService;
 
 @Service
@@ -18,19 +19,19 @@ public class CarsdetailServiceImpl implements CarsdetailService {
 	@Override
 	public List<CarsDetails> getCarsdetailByCar_Name(String car_name) {
 
-		return null;
+		return carsDetailsRepo.findBycarname(car_name);
 	}
 
 	@Override
-	public List<CarsDetails> getCarsdetailByCar_type(String car_type) {
+	public List<CarsDetails> getCarsdetailByCarprice(String carprice) {
 
-		return null;
+		return carsDetailsRepo.findByPrice(carprice);
 	}
 
 	@Override
 	public List<CarsDetails> getAllCarsdetail() {
 
-		return null;
+		return carsDetailsRepo.findAll();
 	}
 
 	@Override
@@ -40,7 +41,7 @@ public class CarsdetailServiceImpl implements CarsdetailService {
 	}
 
 	@Override
-	public CarsDetails upateCarsdetail(String carname, Integer id) {
+	public CarsDetails upateCarsdetail(String carname, Integer id) throws ResourceNotFoundException {
 		CarsDetails carsDetails = getCarsdetailById(id);
 		carsDetails.setCarname(carname);
 		return carsDetailsRepo.save(carsDetails);
@@ -53,7 +54,7 @@ public class CarsdetailServiceImpl implements CarsdetailService {
 	}
 
 	@Override
-	public CarsDetails getCarsdetailById(int id) {
+	public CarsDetails getCarsdetailById(int id) throws ResourceNotFoundException {
 
 		return carsDetailsRepo.findById(id).orElse(new CarsDetails());
 	}

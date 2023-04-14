@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.java.main.Dao.CustomersDetailRepository;
 import com.java.main.entity.CustomersDetail;
+import com.java.main.exception.ResourceNotFoundException;
 import com.java.main.service.CustomerDetailsService;
 
 @Service
@@ -46,7 +47,7 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 	}
 
 	@Override
-	public CustomersDetail upateCustomer(String customername, Integer id) {
+	public CustomersDetail upateCustomer(String customername, Integer id) throws ResourceNotFoundException{
 		CustomersDetail customersDetail = getCustomerById(id);
 		customersDetail.setCustomername(customername);
 
@@ -60,7 +61,7 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 	}
 
 	@Override
-	public CustomersDetail getCustomerById(int id) {
+	public CustomersDetail getCustomerById(int id) throws ResourceNotFoundException{
 
 		return customerDetailRepository.findById(id).orElse(new CustomersDetail());
 	}

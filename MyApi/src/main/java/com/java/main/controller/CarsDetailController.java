@@ -3,6 +3,8 @@ package com.java.main.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.java.main.entity.CarsDetails;
+import com.java.main.exception.ResourceNotFoundException;
 import com.java.main.service.CarsdetailService;
-
 
 @RestController
 @RequestMapping("/api/v1")
@@ -20,40 +22,75 @@ public class CarsDetailController {
 	private CarsdetailService carsdetailServiceImpl;
 
 	@GetMapping(value = "/carsDetails")
-	public List<CarsDetails> getAllCarsPackage(int id) {
-		return carsdetailServiceImpl.getAllCarsdetail();
+	public ResponseEntity<List<CarsDetails>> getAllCarsPackage() {
+		List<CarsDetails> carsDetails = carsdetailServiceImpl.getAllCarsdetail();
+		try {
+			if (carsDetails.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+			}
+			return new ResponseEntity<>(carsDetails, HttpStatus.OK);
+
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
 	}
 
 	@PostMapping(value = "/carsDetails")
-	public CarsDetails regCarsPackage(@RequestBody CarsDetails cd) {
-		return carsdetailServiceImpl.regCarsdetail(cd);
+	public ResponseEntity<CarsDetails> regCarsPackage(@RequestBody CarsDetails cd) {
+		try {
+			CarsDetails carsDetails = carsdetailServiceImpl.regCarsdetail(cd);
+			return new ResponseEntity<>(carsDetails, HttpStatus.CREATED);
+
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
 	}
 
-//	@PutMapping(value = "/{carname}/{id}")
-//	public CarsDetails upateCarsPackage(@PathVariable("carname") String carname, @PathVariable("id") Integer id) {
-//		return carsdetailServiceImpl.upateCarsdetail(carname, id);
-//	}
-
-//	@DeleteMapping(value = "/{id}")
-//	public void deletecardetails(@PathVariable("id") Integer id) {
-//		carsdetailServiceImpl.deleteCarsdetail(id);
-//	}
-
 	@GetMapping(value = "/{id}")
-	public CarsDetails getCarsdetailById(int id) {
+	public ResponseEntity<CarsDetails> getCarsdetailById(int id) throws ResourceNotFoundException {
 
-		return carsdetailServiceImpl.getCarsdetailById(id);
+		CarsDetails carsDetails = carsdetailServiceImpl.getCarsdetailById(id);
+		if (carsDetails == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+		}
+		return new ResponseEntity<>(carsDetails, HttpStatus.OK);
+
 	}
 
 	@GetMapping(value = "/{carName}")
-	public List<CarsDetails> getCarspackageByCar_Name(String car_name) {
+	public ResponseEntity<List<CarsDetails>> getCarspackageByCar_Name(String car_name) {
 
-		return carsdetailServiceImpl.getCarsdetailByCar_Name(car_name);
+		List<CarsDetails> carsDetails = carsdetailServiceImpl.getCarsdetailByCar_Name(car_name);
+		try {
+			if (carsDetails.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+			}
+			return new ResponseEntity<>(carsDetails, HttpStatus.OK);
+
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
 	}
 
 	@GetMapping(value = "/cars-Detail/{car-Detail-Type}")
-	public List<CarsDetails> getCarsPackageByCar_type(String car_type) {
-		return carsdetailServiceImpl.getCarsdetailByCar_type(car_type);
+	public ResponseEntity<List<CarsDetails>> getCarsPackageByprice(String carprice) {
+		List<CarsDetails> carsDetails = carsdetailServiceImpl.getCarsdetailByCarprice(carprice);
+		try {
+			if (carsDetails.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			return new ResponseEntity<>(carsDetails, HttpStatus.OK);
+
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
 	}
 
 }
